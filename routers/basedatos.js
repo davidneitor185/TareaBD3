@@ -26,3 +26,16 @@ router.post('/insertarpacientes', async (req, res) => {
   );
   res.send('INSERTADO');
 });
+
+router.delete('/borrarpacientes', async (req, res) => {
+  const numid = req.body;
+  await pool.query('DELETE FROM pacientes where numid = $1',[numid.numid]);
+  res.json(`User ${numid.numid} deleted Successfully`);
+});
+
+router.put('/editarpacientes', async (req, res) => {
+  const { nombre, apellido, numid } = req.body;
+  await pool.query('UPDATE pacientes SET nombre = $1, apellido = $2 WHERE numid = $3', [nombre, apellido, numid]);
+  
+  res.json(`User ${numid} update Successfully`);
+});
